@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Copa Caster Bet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --black:        #000000;
+      --gold:         #C8A84B;
+      --gold-light:   #E0C070;
+      --gold-dim:     rgba(200,168,75,0.18);
+      --blue:         #1A7FE8;
+      --green:        #2DB84A;
+      --white:        #FFFFFF;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Orbitron', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── SCROLLBAR ─────────────────────────── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: #000; }
+    ::-webkit-scrollbar-thumb { background: var(--gold); }
+
+    /* ── NAVBAR ────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      padding: 18px 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(to bottom, rgba(0,0,0,.92), transparent);
+      transition: background .4s;
+    }
+    nav.solid { background: rgba(0,0,0,.96); border-bottom: 1px solid rgba(200,168,75,.12); }
+
+    .nav-logo-wrap {
+      width: 54px; height: 54px;
+      border: 1.5px dashed rgba(200,168,75,.5);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 9px; color: rgba(200,168,75,.6);
+      letter-spacing: 1px; text-align: center; line-height: 1.3;
+    }
+
+    .nav-links { list-style: none; display: flex; gap: 44px; }
+    .nav-links a {
+      color: rgba(255,255,255,.75);
+      text-decoration: none;
+      font-size: 10px;
+      letter-spacing: 4px;
+      font-weight: 600;
+      transition: color .3s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    .nav-btn {
+      padding: 10px 28px;
+      border: 1.5px solid var(--gold);
+      color: var(--gold);
+      text-decoration: none;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 10px;
+      letter-spacing: 3px;
+      font-weight: 700;
+      transition: all .3s;
+      position: relative; overflow: hidden;
+    }
+    .nav-btn::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: var(--gold);
+      transform: translateX(-101%);
+      transition: transform .3s;
+      z-index: -1;
+    }
+    .nav-btn:hover { color: var(--black); }
+    .nav-btn:hover::before { transform: translateX(0); }
+
+    /* ── HERO ──────────────────────────────── */
+    .hero {
+      position: relative;
+      height: 100vh; min-height: 720px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 50% 40%, #111 0%, #000 80%);
+      will-change: transform;
+    }
+
+    /* grid lines overlay */
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(200,168,75,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(200,168,75,.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      will-change: transform;
+    }
+
+    /* particles */
+    .particles { position: absolute; inset: 0; pointer-events: none; }
+    .dot {
+      position: absolute;
+      border-radius: 50%;
+      background: var(--gold);
+      opacity: 0;
+      animation: rise linear infinite;
+    }
+    @keyframes rise {
+      0%   { transform: translateY(110vh) scale(.5); opacity: 0; }
+      10%  { opacity: .25; }
+      90%  { opacity: .25; }
+      100% { transform: translateY(-60px) scale(1.2); opacity: 0; }
+    }
+
+    .hero-content {
+      position: relative; z-index: 10;
+      text-align: center;
+      padding: 0 20px;
+      display: flex; flex-direction: column; align-items: center;
+    }
+
+    /* logo placeholder */
+    .ccb-logo-wrap {
+      position: relative;
+      width: 140px; height: 180px;
+      margin-bottom: 40px;
+    }
+    .ccb-logo-wrap .outer-border {
+      position: absolute; inset: 0;
+      border: 2px dashed rgba(200,168,75,.45);
+    }
+    .ccb-logo-wrap .inner-border {
+      position: absolute; inset: 10px;
+      border: 1px dashed rgba(200,168,75,.18);
+    }
+    .ccb-logo-wrap .logo-label {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 6px;
+      font-size: 9px; letter-spacing: 3px;
+      color: rgba(200,168,75,.45);
+    }
+    .ccb-logo-wrap .logo-label span.big {
+      font-size: 28px; font-weight: 900;
+      color: rgba(200,168,75,.3);
+      letter-spacing: 1px;
+    }
+
+    .hero-title {
+      font-size: clamp(38px, 7.5vw, 96px);
+      font-weight: 900;
+      letter-spacing: 10px;
+      line-height: 1;
+      margin-bottom: 22px;
+    }
+    .t-gold  { color: var(--gold); }
+    .t-blue  { color: var(--blue); }
+    .t-green { color: var(--green); }
+    .t-white { color: var(--white); }
+
+    .hero-tagline {
+      font-size: clamp(11px, 1.6vw, 16px);
+      letter-spacing: 9px;
+      font-weight: 500;
+      margin-bottom: 50px;
+      color: rgba(255,255,255,.85);
+    }
+
+    .cta-btn {
+      display: inline-block;
+      padding: 16px 54px;
+      border: 2px solid var(--gold);
+      color: var(--gold);
+      text-decoration: none;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 12px;
+      letter-spacing: 5px;
+      font-weight: 700;
+      position: relative; overflow: hidden;
+      transition: color .35s;
+    }
+    .cta-btn::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: var(--gold);
+      transform: translateX(-101%);
+      transition: transform .35s cubic-bezier(.4,0,.2,1);
+      z-index: -1;
+    }
+    .cta-btn:hover { color: var(--black); }
+    .cta-btn:hover::before { transform: translateX(0); }
+
+    /* player image */
+    .hero-player {
+      position: absolute;
+      bottom: 0; right: 6%;
+      width: 32%; max-width: 420px;
+      height: 88%;
+      z-index: 8;
+      will-change: transform;
+    }
+    .img-placeholder {
+      width: 100%; height: 100%;
+      border: 2px dashed rgba(200,168,75,.28);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 14px;
+      position: relative;
+    }
+    .img-placeholder::after {
+      content: '';
+      position: absolute; inset: 12px;
+      border: 1px dashed rgba(200,168,75,.1);
+    }
+    .img-placeholder .ph-icon { font-size: 46px; opacity: .2; }
+    .img-placeholder .ph-text {
+      font-size: 10px; letter-spacing: 3px;
+      color: rgba(200,168,75,.35);
+      text-align: center; line-height: 1.8;
+    }
+
+    /* corner accents */
+    .corner { position: absolute; width: 20px; height: 20px; }
+    .corner.tl { top: -2px; left: -2px; border-top: 2px solid var(--gold); border-left: 2px solid var(--gold); }
+    .corner.tr { top: -2px; right: -2px; border-top: 2px solid var(--gold); border-right: 2px solid var(--gold); }
+    .corner.bl { bottom: -2px; left: -2px; border-bottom: 2px solid var(--gold); border-left: 2px solid var(--gold); }
+    .corner.br { bottom: -2px; right: -2px; border-bottom: 2px solid var(--gold); border-right: 2px solid var(--gold); }
+
+    /* scroll arrow */
+    .scroll-down {
+      position: absolute; bottom: 28px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 10; display: flex; flex-direction: column; align-items: center; gap: 6px;
+      animation: bob 2.2s ease-in-out infinite;
+    }
+    .scroll-down span {
+      display: block; width: 1px; height: 50px;
+      background: linear-gradient(to bottom, transparent, var(--gold));
+    }
+    .scroll-down i {
+      width: 8px; height: 8px;
+      border-right: 1.5px solid var(--gold);
+      border-bottom: 1.5px solid var(--gold);
+      transform: rotate(45deg);
+    }
+    @keyframes bob {
+      0%, 100% { opacity: .5; transform: translateX(-50%) translateY(0); }
+      50%       { opacity: 1;  transform: translateX(-50%) translateY(8px); }
+    }
+
+    /* ── DIVIDER ───────────────────────────── */
+    .rainbow-divider {
+      height: 2px;
+      background: linear-gradient(to right,
+        transparent 0%,
+        var(--gold) 20%,
+        var(--blue) 50%,
+        var(--green) 80%,
+        transparent 100%);
+    }
+
+    /* ── SECTION BASE ──────────────────────── */
+    .section { padding: 110px 60px; position: relative; }
+    .section-eyebrow {
+      display: block;
+      font-size: 10px; letter-spacing: 7px;
+      color: var(--gold); font-weight: 600;
+      margin-bottom: 18px;
+    }
+    .section-title {
+      font-size: clamp(28px, 4vw, 54px);
+      font-weight: 900;
+      letter-spacing: 4px;
+      line-height: 1.05;
+      margin-bottom: 30px;
+    }
+
+    /* ── ABOUT ─────────────────────────────── */
+    .about { background: #060606; }
+    .about-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: center;
+    }
+    .about-img-wrap { position: relative; }
+    .about-img-placeholder {
+      width: 100%; aspect-ratio: 3/4;
+      border: 2px dashed rgba(200,168,75,.28);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 14px;
+    }
+    .about-img-placeholder::after {
+      content: '';
+      position: absolute; inset: 12px;
+      border: 1px dashed rgba(200,168,75,.1);
+    }
+    .about-img-placeholder .ph-icon { font-size: 44px; opacity: .2; }
+    .about-img-placeholder .ph-text {
+      font-size: 10px; letter-spacing: 3px;
+      color: rgba(200,168,75,.35);
+      text-align: center; line-height: 1.8;
+    }
+    .about-text p {
+      font-size: 13px; line-height: 2.1;
+      letter-spacing: 1px;
+      color: rgba(255,255,255,.65);
+      font-weight: 400;
+      margin-bottom: 20px;
+    }
+
+    /* ── STATS ─────────────────────────────── */
+    .stats { background: #000; padding: 0; }
+    .stats-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(3, 1fr);
+    }
+    .stat-item {
+      text-align: center;
+      padding: 60px 20px;
+      border: 1px solid rgba(200,168,75,.08);
+      position: relative; overflow: hidden;
+      transition: background .4s;
+    }
+    .stat-item:hover { background: rgba(200,168,75,.03); }
+    .stat-item::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(to right, var(--gold), var(--blue));
+    }
+    .stat-num {
+      font-size: clamp(48px, 5vw, 72px);
+      font-weight: 900; line-height: 1;
+      margin-bottom: 12px;
+    }
+    .stat-lbl {
+      font-size: 10px; letter-spacing: 5px;
+      color: rgba(255,255,255,.45); font-weight: 600;
+    }
+
+    /* ── PARALLAX BAND ─────────────────────── */
+    .parallax-band {
+      position: relative; height: 420px;
+      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .pb-bg {
+      position: absolute; inset: -100px 0;
+      background:
+        linear-gradient(135deg, rgba(26,127,232,.06) 0%, rgba(45,184,74,.06) 100%),
+        #080808;
+      will-change: transform;
+    }
+    .pb-lines {
+      position: absolute; inset: 0;
+      background-image:
+        repeating-linear-gradient(
+          -45deg,
+          transparent,
+          transparent 60px,
+          rgba(200,168,75,.025) 60px,
+          rgba(200,168,75,.025) 62px
+        );
+    }
+    .pb-content {
+      position: relative; z-index: 1;
+      text-align: center;
+    }
+    .pb-big {
+      font-size: clamp(48px, 10vw, 120px);
+      font-weight: 900;
+      letter-spacing: 12px;
+      line-height: 1;
+    }
+    .pb-sub {
+      font-size: clamp(11px, 1.4vw, 14px);
+      letter-spacing: 12px;
+      color: rgba(255,255,255,.3);
+      font-weight: 600;
+      margin-top: 10px;
+    }
+
+    /* ── RULES ─────────────────────────────── */
+    .rules {
+      background: #060606;
+      position: relative; overflow: hidden;
+    }
+    .rules::before {
+      content: 'REGRAS';
+      position: absolute;
+      font-size: clamp(80px, 18vw, 220px);
+      font-weight: 900;
+      color: rgba(200,168,75,.025);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      letter-spacing: 20px;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    .rules-inner { max-width: 900px; margin: 0 auto; }
+    .rules-header { text-align: center; margin-bottom: 70px; }
+
+    .rule-card {
+      display: flex; gap: 28px;
+      margin-bottom: 20px;
+      padding: 28px 30px;
+      border: 1px solid rgba(200,168,75,.08);
+      background: rgba(0,0,0,.4);
+      position: relative;
+      transition: border-color .35s, background .35s;
+    }
+    .rule-card:hover {
+      border-color: rgba(200,168,75,.35);
+      background: rgba(200,168,75,.025);
+    }
+    .rule-card::before {
+      content: '';
+      position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+      background: linear-gradient(to bottom, var(--gold), var(--blue));
+    }
+    .rule-num {
+      font-size: 44px; font-weight: 900;
+      color: rgba(200,168,75,.15);
+      min-width: 64px; line-height: 1;
+      flex-shrink: 0;
+    }
+    .rule-body h3 {
+      font-size: 11px; letter-spacing: 4px;
+      color: var(--gold);
+      margin-bottom: 10px; font-weight: 700;
+    }
+    .rule-body p {
+      font-size: 12px; letter-spacing: 1px;
+      line-height: 2;
+      color: rgba(255,255,255,.6);
+      font-weight: 400;
+    }
+
+    /* ── FOOTER ────────────────────────────── */
+    footer {
+      background: #000;
+      border-top: 1px solid rgba(200,168,75,.15);
+      padding: 70px 60px 50px;
+    }
+    .footer-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; flex-direction: column;
+      align-items: center; gap: 30px;
+    }
+    .footer-brand {
+      display: flex; align-items: center; gap: 14px;
+    }
+    .footer-flame {
+      width: 44px; height: 44px;
+      border: 1px dashed rgba(200,168,75,.4);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+    }
+    .footer-name {
+      font-size: 22px; font-weight: 700;
+      letter-spacing: 3px; color: var(--white);
+    }
+    .footer-tagline {
+      font-size: 10px; letter-spacing: 9px;
+      color: rgba(255,255,255,.35);
+    }
+    .footer-divider {
+      width: 120px; height: 1px;
+      background: linear-gradient(to right, transparent, rgba(200,168,75,.4), transparent);
+    }
+    .footer-copy {
+      font-size: 9px; letter-spacing: 3px;
+      color: rgba(255,255,255,.2);
+      text-align: center;
+    }
+
+    /* ── FADE IN ANIMATION ─────────────────── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ────────────────────────── */
+    @media (max-width: 900px) {
+      nav { padding: 14px 24px; }
+      .nav-links { display: none; }
+      .section { padding: 70px 24px; }
+      .about-inner { grid-template-columns: 1fr; gap: 40px; }
+      .stats-inner { grid-template-columns: 1fr; }
+      .hero-player { display: none; }
+      footer { padding: 50px 24px 40px; }
+    }
+
+    @media (max-width: 500px) {
+      .hero-title { letter-spacing: 5px; }
+      .hero-tagline { letter-spacing: 5px; font-size: 10px; }
+      .cta-btn { padding: 14px 30px; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAVBAR ──────────────────────────────────── -->
+<nav id="nav">
+  <div class="nav-logo-wrap">
+    <span style="font-size:9px;letter-spacing:1px;color:rgba(200,168,75,.5);line-height:1.3;text-align:center;">CCB<br>LOGO</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#sobre">SOBRE</a></li>
+    <li><a href="#regras">REGRAS</a></li>
+    <li><a href="#regras">PARTICIPE</a></li>
+  </ul>
+  <a href="#regras" class="nav-btn">PARTICIPAR</a>
+</nav>
+
+<!-- ── HERO ────────────────────────────────────── -->
+<section class="hero" id="home">
+
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-grid" id="heroGrid"></div>
+  <div class="particles" id="particles"></div>
+
+  <!-- gold glow -->
+  <div style="
+    position:absolute; top:35%; left:50%;
+    transform:translate(-50%,-50%);
+    width:600px; height:400px;
+    background:radial-gradient(ellipse, rgba(200,168,75,.07) 0%, transparent 70%);
+    pointer-events:none; z-index:2;
+  "></div>
+
+  <div class="hero-content">
+    <!-- Logo placeholder -->
+    <div class="ccb-logo-wrap">
+      <div class="corner tl"></div>
+      <div class="corner tr"></div>
+      <div class="corner bl"></div>
+      <div class="corner br"></div>
+      <div class="outer-border"></div>
+      <div class="inner-border"></div>
+      <div class="logo-label">
+        <span class="big">CCB</span>
+        <span>LOGO</span>
+      </div>
+    </div>
+
+    <h1 class="hero-title">
+      <span class="t-gold" style="display:block;">COPA CASTER</span>
+      <span style="display:block;">
+        <span class="t-blue">BE</span><span class="t-green">T</span>
+      </span>
+    </h1>
+
+    <p class="hero-tagline">
+      ONDE O <span class="t-blue">END</span> É SEMPRE <span class="t-green">HAPPY</span>
+    </p>
+
+    <a href="#regras" class="cta-btn">VER REGRAS</a>
+  </div>
+
+  <!-- Player image placeholder -->
+  <div class="hero-player" id="heroPlayer">
+    <div class="img-placeholder">
+      <div class="corner tl"></div>
+      <div class="corner tr"></div>
+      <div class="corner bl"></div>
+      <div class="corner br"></div>
+      <span class="ph-icon">⚽</span>
+      <span class="ph-text">IMAGEM<br>DO JOGADOR</span>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="scroll-down">
+    <span></span>
+    <i></i>
+  </div>
+</section>
+
+<div class="rainbow-divider"></div>
+
+<!-- ── ABOUT ────────────────────────────────────── -->
+<section class="section about" id="sobre">
+  <div class="about-inner">
+    <div class="about-img-wrap fade-up">
+      <div class="about-img-placeholder">
+        <div class="corner tl"></div>
+        <div class="corner tr"></div>
+        <div class="corner bl"></div>
+        <div class="corner br"></div>
+        <span class="ph-icon">📸</span>
+        <span class="ph-text">IMAGEM<br>DA CAMPANHA</span>
+      </div>
+    </div>
+    <div class="about-text fade-up" style="transition-delay:.15s">
+      <span class="section-eyebrow">// SOBRE A CAMPANHA</span>
+      <h2 class="section-title">
+        <span class="t-gold">COPA</span><br>
+        <span class="t-blue">CASTER</span><br>
+        <span class="t-green">BET</span>
+      </h2>
+      <p>
+        A <span class="t-gold">Copa Caster Bet</span> é a maior campanha de apostas
+        esportivas da comunidade CasterClub. Uma competição onde cada aposta conta,
+        cada vitória celebra e cada membro tem a chance de se tornar campeão.
+      </p>
+      <p>
+        Participe, acumule pontos e comprove que no CasterClub,
+        o <span class="t-blue">END</span> é sempre <span class="t-green">HAPPY</span>.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ── STATS BAR ─────────────────────────────────── -->
+<div class="stats">
+  <div class="stats-inner">
+    <div class="stat-item fade-up">
+      <div class="stat-num t-gold">01</div>
+      <div class="stat-lbl">TEMPORADA</div>
+    </div>
+    <div class="stat-item fade-up" style="transition-delay:.1s">
+      <div class="stat-num t-blue">∞</div>
+      <div class="stat-lbl">POSSIBILIDADES</div>
+    </div>
+    <div class="stat-item fade-up" style="transition-delay:.2s">
+      <div class="stat-num t-green">100<span style="font-size:.5em">%</span></div>
+      <div class="stat-lbl">DIVERSÃO</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── PARALLAX BAND ──────────────────────────────── -->
+<div class="parallax-band" id="pbSection">
+  <div class="pb-bg" id="pbBg"></div>
+  <div class="pb-lines"></div>
+  <div class="pb-content">
+    <p class="pb-big">
+      <span class="t-gold">PERGUNTE</span>
+    </p>
+    <p class="pb-sub">AO NOSSO</p>
+    <p class="pb-big">
+      <span class="t-green">TIME</span>
+    </p>
+  </div>
+</div>
+
+<div class="rainbow-divider"></div>
+
+<!-- ── RULES ──────────────────────────────────────── -->
+<section class="section rules" id="regras">
+  <div class="rules-inner">
+    <div class="rules-header">
+      <span class="section-eyebrow">// REGULAMENTO OFICIAL</span>
+      <h2 class="section-title">
+        REGRAS DA<br><span class="t-gold">CAMPANHA</span>
+      </h2>
+    </div>
+
+    <div class="rule-card fade-up">
+      <div class="rule-num">01</div>
+      <div class="rule-body">
+        <h3>ELEGIBILIDADE</h3>
+        <p>Podem participar todos os membros ativos da comunidade CasterClub com conta verificada e em situação regular na plataforma.</p>
+      </div>
+    </div>
+
+    <div class="rule-card fade-up" style="transition-delay:.08s">
+      <div class="rule-num">02</div>
+      <div class="rule-body">
+        <h3>PERÍODO DA CAMPANHA</h3>
+        <p>A Copa Caster Bet acontece durante o período oficial da campanha. Todas as apostas realizadas dentro do prazo serão contabilizadas para o ranking.</p>
+      </div>
+    </div>
+
+    <div class="rule-card fade-up" style="transition-delay:.16s">
+      <div class="rule-num">03</div>
+      <div class="rule-body">
+        <h3>SISTEMA DE PONTUAÇÃO</h3>
+        <p>Os pontos são acumulados conforme as apostas vencedoras. Quanto maior a odd e o acerto, mais pontos você soma no ranking geral da competição.</p>
+      </div>
+    </div>
+
+    <div class="rule-card fade-up" style="transition-delay:.24s">
+      <div class="rule-num">04</div>
+      <div class="rule-body">
+        <h3>PREMIAÇÃO</h3>
+        <p>Os melhores classificados ao final da temporada serão premiados com recompensas exclusivas e benefícios especiais da comunidade CasterClub.</p>
+      </div>
+    </div>
+
+    <div class="rule-card fade-up" style="transition-delay:.32s">
+      <div class="rule-num">05</div>
+      <div class="rule-body">
+        <h3>FAIR PLAY</h3>
+        <p>Qualquer tentativa de fraude ou uso de múltiplas contas resultará em desclassificação imediata e possível banimento definitivo da plataforma.</p>
+      </div>
+    </div>
+
+    <div class="rule-card fade-up" style="transition-delay:.40s">
+      <div class="rule-num">06</div>
+      <div class="rule-body">
+        <h3>SUPORTE</h3>
+        <p>Em caso de dúvidas entre em contato com o time CasterClub através dos canais oficiais da comunidade. Pergunte ao nosso time!</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────────────── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-flame">♦</div>
+      <span class="footer-name">CasterClub</span>
+    </div>
+    <p class="footer-tagline">PERGUNTE AO NOSSO TIME</p>
+    <div class="footer-divider"></div>
+    <p class="footer-copy">
+      © 2024 CASTERCLUB &nbsp;·&nbsp; COPA CASTER BET &nbsp;·&nbsp; TODOS OS DIREITOS RESERVADOS
+    </p>
+  </div>
+</footer>
+
+<script>
+  /* ── Navbar scroll class ── */
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('solid', window.scrollY > 60);
+  }, { passive: true });
+
+  /* ── Generate floating dots ── */
+  const pc = document.getElementById('particles');
+  for (let i = 0; i < 35; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot';
+    const size = Math.random() * 3 + 1;
+    d.style.cssText = `
+      width:${size}px; height:${size}px;
+      left:${Math.random() * 100}%;
+      animation-duration:${12 + Math.random() * 18}s;
+      animation-delay:${Math.random() * 14}s;
+    `;
+    /* give some dots a blue or green tint */
+    const tint = Math.random();
+    if (tint < .25) d.style.background = 'var(--blue)';
+    else if (tint < .45) d.style.background = 'var(--green)';
+    pc.appendChild(d);
+  }
+
+  /* ── Parallax on scroll ── */
+  const heroBg     = document.getElementById('heroBg');
+  const heroGrid   = document.getElementById('heroGrid');
+  const heroPlayer = document.getElementById('heroPlayer');
+  const pbBg       = document.getElementById('pbBg');
+  const pbSection  = document.getElementById('pbSection');
+
+  function onScroll() {
+    const y = window.scrollY;
+
+    /* hero layers */
+    heroBg.style.transform   = `translateY(${y * 0.08}px)`;
+    heroGrid.style.transform  = `translateY(${y * 0.12}px)`;
+    if (heroPlayer) heroPlayer.style.transform = `translateY(${y * 0.25}px)`;
+
+    /* parallax band */
+    if (pbSection) {
+      const rect   = pbSection.getBoundingClientRect();
+      const offset = (window.innerHeight * 0.5 - rect.top) * 0.2;
+      pbBg.style.transform = `translateY(${offset}px)`;
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  /* ── Intersection observer for fade-up ── */
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
