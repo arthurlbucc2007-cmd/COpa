@@ -94,9 +94,11 @@
     .hero {
       position: relative;
       height: 100vh; min-height: 720px;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
+      display: flex; flex-direction: row;
+      align-items: flex-end;
+      justify-content: flex-start;
       overflow: hidden;
+      padding: 0 0 0 8%;
     }
 
     .hero-bg {
@@ -134,20 +136,22 @@
 
     .hero-content {
       position: relative; z-index: 10;
-      text-align: center;
-      padding: 0 20px;
-      display: flex; flex-direction: column; align-items: center;
+      text-align: left;
+      padding: 0 0 80px 0;
+      display: flex; flex-direction: column; align-items: flex-start;
+      flex: 1;
+      max-width: 56%;
     }
 
     .ccb-logo-img {
-      width: clamp(140px, 18vw, 220px);
-      margin-bottom: 32px;
+      width: clamp(110px, 13vw, 180px);
+      margin-bottom: 28px;
       filter: drop-shadow(0 0 24px rgba(200,168,75,.4));
     }
 
     .hero-title-img {
-      width: clamp(280px, 60vw, 780px);
-      max-width: 90vw;
+      width: clamp(260px, 42vw, 580px);
+      max-width: 100%;
       margin-bottom: 22px;
       filter: drop-shadow(0 0 18px rgba(200,168,75,.35));
     }
@@ -190,10 +194,11 @@
 
     /* player image */
     .hero-player {
-      position: absolute;
-      bottom: 0; right: 6%;
-      width: 32%; max-width: 420px;
-      height: 88%;
+      position: relative;
+      flex-shrink: 0;
+      align-self: flex-end;
+      width: 38%; max-width: 500px;
+      height: 90%;
       z-index: 8;
       will-change: transform;
     }
