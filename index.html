@@ -549,6 +549,35 @@
     }
 
     /* ── RESPONSIVE ────────────────────────── */
+    /* ── JOGOS VÁLIDOS ─────────────────────────── */
+    .jogos-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .jogos-col-title {
+      font-size: 10px; letter-spacing: 5px; font-weight: 700;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(200,168,75,.15);
+    }
+    .jogos-list {
+      list-style: none;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .jogos-list li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 12px; letter-spacing: 1px; line-height: 1.8;
+      color: rgba(255,255,255,.7);
+    }
+    .jogos-list li .arrow { color: var(--gold); flex-shrink: 0; font-style: normal; }
+    .jogos-obs {
+      margin-top: 20px;
+      font-size: 10px; letter-spacing: 2px;
+      color: rgba(255,255,255,.35);
+      line-height: 2;
+    }
+
     @media (max-width: 900px) {
       nav { padding: 14px 24px; }
       .nav-links { display: none; }
@@ -557,6 +586,7 @@
       .stats-inner { grid-template-columns: 1fr; }
       .hero-player { display: none; }
       footer { padding: 50px 24px 40px; }
+      .jogos-grid { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 500px) {
@@ -659,6 +689,57 @@
     </p>
   </div>
 </div>
+
+<div class="rainbow-divider"></div>
+
+<!-- ── JOGOS VÁLIDOS ──────────────────────────────── -->
+<section class="section" id="jogos" style="background:#080808;">
+  <div style="max-width:960px;margin:0 auto;">
+
+    <div class="rules-header">
+      <span class="section-eyebrow">// CALENDÁRIO DA CAMPANHA</span>
+      <h2 class="section-title">
+        JOGOS<br><span class="t-gold">VÁLIDOS</span>
+      </h2>
+      <p style="font-size:13px;letter-spacing:2px;color:rgba(255,255,255,.5);font-weight:400;margin-top:10px;">
+        Veja quais partidas estão dentro de cada campanha.
+      </p>
+    </div>
+
+    <div class="jogos-grid">
+
+      <!-- Raspadinhas -->
+      <div class="rasp-card fade-up">
+        <div class="rasp-badge">🎟️ RASPADINHAS</div>
+        <div class="rasp-body" style="flex-direction:column;">
+          <p class="jogos-col-title t-gold">QUANDO POSSO RESGATAR?</p>
+          <ul class="jogos-list">
+            <li><i class="arrow">▸</i> Durante qualquer jogo da Copa do Mundo</li>
+            <li><i class="arrow">▸</i> Enquanto o Caster Club estiver em funcionamento</li>
+          </ul>
+          <p class="jogos-obs">⏰ Válido em qualquer partida transmitida, desde que dentro do horário de funcionamento do CasterClub.</p>
+        </div>
+      </div>
+
+      <!-- CCB Bet -->
+      <div class="rasp-card fade-up" style="transition-delay:.12s;">
+        <div class="rasp-badge t-gold">⚽ CASTER CLUB BET</div>
+        <div class="rasp-body" style="flex-direction:column;">
+          <p class="jogos-col-title t-gold">PARTIDAS ELEGÍVEIS PARA APOSTA</p>
+          <ul class="jogos-list">
+            <li><i class="arrow">▸</i> <strong style="color:#fff;">Todos</strong> os jogos do Brasil</li>
+            <li><i class="arrow">▸</i> Oitavas de Final</li>
+            <li><i class="arrow">▸</i> Quartas de Final</li>
+            <li><i class="arrow">▸</i> Semifinais</li>
+            <li><i class="arrow">▸</i> <span class="t-gold"><strong>Final</strong></span></li>
+          </ul>
+          <p class="jogos-obs">⏰ Dentro do horário de funcionamento do CasterClub.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
 
 <div class="rainbow-divider"></div>
 
