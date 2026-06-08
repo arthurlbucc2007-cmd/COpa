@@ -440,6 +440,65 @@
       font-weight: 400;
     }
 
+    /* ── RASPADINHA CARDS ──────────────────── */
+    .rasp-card {
+      margin-bottom: 20px;
+      border: 1px solid rgba(200,168,75,.15);
+      background: rgba(255,255,255,.02);
+      position: relative;
+      overflow: hidden;
+      transition: border-color .35s, background .35s;
+    }
+    .rasp-card:hover {
+      border-color: rgba(200,168,75,.4);
+      background: rgba(200,168,75,.03);
+    }
+    .rasp-card::before {
+      content: '';
+      position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+      background: linear-gradient(to bottom, var(--gold), var(--blue));
+    }
+    .rasp-badge {
+      padding: 14px 28px;
+      font-size: 11px; letter-spacing: 4px; font-weight: 700;
+      color: var(--gold);
+      border-bottom: 1px solid rgba(200,168,75,.1);
+      background: rgba(200,168,75,.04);
+    }
+    .rasp-body {
+      display: flex; gap: 0;
+      padding: 24px 28px;
+    }
+    .rasp-col {
+      flex: 1; padding: 0 20px;
+    }
+    .rasp-col:first-child { padding-left: 0; }
+    .rasp-col:last-child  { padding-right: 0; }
+    .rasp-role {
+      display: block;
+      font-size: 9px; letter-spacing: 4px; font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .rasp-col p {
+      font-size: 12px; letter-spacing: .5px;
+      line-height: 1.8; color: rgba(255,255,255,.65);
+      font-weight: 400;
+    }
+    .rasp-col strong { color: var(--white); font-weight: 700; }
+    .rasp-divider-v {
+      width: 1px; flex-shrink: 0;
+      background: rgba(200,168,75,.12);
+      margin: 0 4px;
+    }
+    .rasp-footer {
+      padding: 12px 28px;
+      border-top: 1px solid rgba(200,168,75,.08);
+      background: rgba(0,0,0,.3);
+      font-size: 11px; letter-spacing: 1px;
+      color: rgba(255,255,255,.45);
+    }
+    .rasp-footer strong { font-weight: 700; }
+
     /* ── FOOTER ────────────────────────────── */
     footer {
       background: #000;
@@ -662,6 +721,129 @@
 
   </div>
 </section>
+
+<!-- ── RASPADINHAS ────────────────────────────────── -->
+<div class="rainbow-divider"></div>
+<section class="section rules" id="raspadinhas" style="background:#000;">
+  <div class="rules-inner" style="max-width:960px;">
+
+    <div class="rules-header">
+      <span class="section-eyebrow">// PRÊMIOS</span>
+      <h2 class="section-title">
+        RASPADINHAS<br><span class="t-gold">COPA CASTER BET</span>
+      </h2>
+      <p style="font-size:13px;letter-spacing:2px;color:rgba(255,255,255,.5);font-weight:400;margin-top:10px;">
+        Cada raspadinha é um prêmio diferente. Confira abaixo o que você pode ganhar.
+      </p>
+    </div>
+
+    <!-- PRIZE CARD STRUCTURE:
+         Top badge = prize label
+         Body = what client + guest get
+         Bottom strip = payment info -->
+
+    <!-- Prêmio 1 -->
+    <div class="rasp-card fade-up">
+      <div class="rasp-badge">🥩 KIT CHURRASCO</div>
+      <div class="rasp-body">
+        <div class="rasp-col">
+          <span class="rasp-role t-gold">PREMIADO</span>
+          <p>Ganha <strong>Kit Churrasco com 6 espetos</strong> + acesso ao evento.</p>
+        </div>
+        <div class="rasp-divider-v"></div>
+        <div class="rasp-col">
+          <span class="rasp-role t-blue">CONVIDADO</span>
+          <p>Ganha <strong>Entrada VIP</strong> gratuita.</p>
+        </div>
+      </div>
+      <div class="rasp-footer">
+        <span>💳 Premiado paga <strong class="t-gold">R$150</strong> — R$30 entrada + R$120 consumação mínima</span>
+      </div>
+    </div>
+
+    <!-- Prêmio 2 -->
+    <div class="rasp-card fade-up" style="transition-delay:.08s">
+      <div class="rasp-badge">🍹 DRINK DUPLO</div>
+      <div class="rasp-body">
+        <div class="rasp-col">
+          <span class="rasp-role t-gold">PREMIADO</span>
+          <p>Ganha <strong>01 Drink</strong> + acesso ao evento.</p>
+        </div>
+        <div class="rasp-divider-v"></div>
+        <div class="rasp-col">
+          <span class="rasp-role t-blue">CONVIDADO</span>
+          <p>Ganha <strong>Entrada VIP</strong> + <strong>01 Drink</strong>.</p>
+        </div>
+      </div>
+      <div class="rasp-footer">
+        <span>💳 Premiado paga <strong class="t-gold">R$150</strong> — R$30 entrada + R$120 consumação mínima</span>
+      </div>
+    </div>
+
+    <!-- Prêmio 3 -->
+    <div class="rasp-card fade-up" style="transition-delay:.16s">
+      <div class="rasp-badge">🍢 ESPETINHO + LONG NECK</div>
+      <div class="rasp-body">
+        <div class="rasp-col">
+          <span class="rasp-role t-gold">PREMIADO</span>
+          <p>Ganha <strong>01 Espetinho</strong> + <strong>01 Long Neck</strong> + acesso ao evento.</p>
+        </div>
+        <div class="rasp-divider-v"></div>
+        <div class="rasp-col">
+          <span class="rasp-role t-blue">CONVIDADO</span>
+          <p>Ganha <strong>Entrada VIP</strong> gratuita.</p>
+        </div>
+      </div>
+      <div class="rasp-footer">
+        <span>💳 Premiado paga <strong class="t-gold">R$150</strong> — R$30 entrada + R$120 consumação mínima</span>
+      </div>
+    </div>
+
+    <!-- Prêmio 4 -->
+    <div class="rasp-card fade-up" style="transition-delay:.24s">
+      <div class="rasp-badge t-green" style="border-color:var(--green);">🍲 FEIJOADA + CAIPIRINHA</div>
+      <div class="rasp-body">
+        <div class="rasp-col">
+          <span class="rasp-role t-gold">PREMIADO</span>
+          <p>Ganha <strong>Feijoada</strong> + <strong>01 Caipirinha</strong> + acesso ao evento.</p>
+        </div>
+        <div class="rasp-divider-v"></div>
+        <div class="rasp-col">
+          <span class="rasp-role t-blue">CONVIDADO</span>
+          <p>Ganha <strong>Feijoada</strong> + <strong>01 Caipirinha</strong> + acesso ao evento.</p>
+        </div>
+      </div>
+      <div class="rasp-footer">
+        <span>💳 Ambos pagam <strong class="t-gold">R$150</strong> cada — R$30 entrada + R$120 consumação mínima</span>
+      </div>
+    </div>
+
+    <!-- Prêmio 5 -->
+    <div class="rasp-card fade-up" style="transition-delay:.32s">
+      <div class="rasp-badge">💨 NARGUILE</div>
+      <div class="rasp-body">
+        <div class="rasp-col">
+          <span class="rasp-role t-gold">PREMIADO</span>
+          <p>Ganha <strong>01 Rosh Narguile</strong> + acesso ao evento.</p>
+        </div>
+        <div class="rasp-divider-v"></div>
+        <div class="rasp-col">
+          <span class="rasp-role t-blue">CONVIDADO</span>
+          <p>Ganha <strong>Entrada VIP</strong> gratuita.</p>
+        </div>
+      </div>
+      <div class="rasp-footer">
+        <span>💳 Premiado paga <strong class="t-gold">R$150</strong> — R$30 entrada + R$120 consumação mínima</span>
+      </div>
+    </div>
+
+    <div class="fade-up" style="text-align:center;margin-top:60px;transition-delay:.4s">
+      <a href="https://wa.me/551151927022?text=Ol%C3%A1,+encontrei+uma+das+raspadinhas+e+preciso+de+mais+informa%C3%A7%C3%B5es" class="cta-btn" target="_blank">RESGATAR MEU PRÊMIO</a>
+    </div>
+
+  </div>
+</section>
+<div class="rainbow-divider"></div>
 
 <!-- ── FOOTER ─────────────────────────────────────── -->
 <footer>
